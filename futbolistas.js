@@ -65,25 +65,31 @@ function tarjetasRojas() {
             jugadorConRoja.push(jugador.nombre);
         };
     });
-
     console.log(jugadorConRoja);
+
+    // CORRECCION
+    const jugadoresConRojas = futbolistas.filter(jugador =>
+        jugador.partidosJugados.some(partido => partido.tarjetaRoja)
+    );
+    console.log(jugadoresConRojas);
 }
-//tarjetasRojas();
+tarjetasRojas();
 
 /**
  * ACT 3 - EXTRA: Listar los rivales en los que un jugador específico anotó: Pide el nombre de un jugador y, si existe en el array, devuelve una lista de los equipos rivales contra los que anotó.
  */
-function anotoJugador(nombreJugador) {
+let anotoJugador = (nombreJugador) => {
     let listaRivales = [];
 
     futbolistas.forEach(jugador => {
-        if(jugador.nombre == nombreJugador){
+        if (jugador.nombre == nombreJugador) {
             listaRivales = jugador.partidosJugados.filter(partido => partido.goles > 0).map(partido => partido.rival);
         }
     });
 
     console.log(listaRivales);
 }
+
 //anotoJugador("Cristiano Ronaldo");
 
 /**
@@ -95,7 +101,7 @@ function promedioTarjetas() {
     futbolistas.forEach(jugador => {
         let amarillasJugador = jugador.partidosJugados.filter(partido => partido.tarjetaAmarilla == true).reduce((acc, partido) => acc + (partido.tarjetaAmarilla ? 1 : 0), 0);
         let promedio = amarillasJugador / jugador.partidosJugados.length;
-        tarjetasAmarillas.push({nommbre: jugador.nombre, promedioAmarillas: promedio.toFixed(2)});
+        tarjetasAmarillas.push({ nommbre: jugador.nombre, promedioAmarillas: promedio.toFixed(2) });
     });
 
     console.log(tarjetasAmarillas);
@@ -109,11 +115,16 @@ function contarJugadores() {
     const goleadores = [];
 
     futbolistas.forEach(jugador => {
-        if (jugador.partidosJugados.filter(partido => partido.goles > 0).length == jugador.partidosJugados.length){
+        if (jugador.partidosJugados.filter(partido => partido.goles > 0).length == jugador.partidosJugados.length) {
             goleadores.push(jugador.nombre);
         }
     });
-    
     console.log(goleadores);
+
+    // CORRECCION
+    const jugadoresSiempreAnotan = futbolistas.filter(jugador =>
+        jugador.partidosJugados.every(partido => partido.goles > 0)
+    );
+    console.log(jugadoresSiempreAnotan);
 }
 //contarJugadores();
